@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bookstore.Models
 {
@@ -6,11 +7,14 @@ namespace Bookstore.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        
         [StringLength(450)]
         public string AppUser { get; set; }
 
         public int BookId { get; set; }
-        public Book Book { get; set; }
+        public Book? Book { get; set; }
+
+        [NotMapped]
+        public string DownloadURL => Book?.DownloadURL;
     }
 }

@@ -1,0 +1,22 @@
+﻿@page
+@model List<Book>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.AverageRating</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,108 @@
+﻿@model Bookstore.Models.Book
+
+@{
+    ViewData["Title"] = "Details";
+   
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            
+            @Html.DisplayNameFor(model => model.FrontPage)
+        </dt>
+        <dd class="col-sm-10">
+
+            @{
+                var fileName1 = Model.FrontPage.Substring(Model.FrontPage.LastIndexOf('/') + 1);
+            }
+            @if (Model.FrontPage.Contains("http"))
+            {
+                <img src="@(Model.FrontPage)" alt="front_page" width="200px">
+            }
+            else
+            {
+                <img src="/UploadedFiles/@fileName1" alt="front_page" width="200px">
+            }
+
+         
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Author.FullName)
+        </dd>
+        <dt class = "col-sm-2">
+            Year Published
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.YearPublished)
+        </dd>
+        <dt class = "col-sm-2">
+            Num Pages
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumPages)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Publisher)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Publisher)
+        </dd>
+        <dt class="col-sm-2">
+            Reviews
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var reviews = ViewBag.Reviews as List<string>;
+            }
+
+            @foreach (var comment in reviews)
+            {
+                <p>Reader's comment: @comment</p>
+            }
+        </dd>
+        @if (User.Identity.IsAuthenticated)
+        {
+
+            
+            var fileName2 = Model.DownloadURL.Substring(Model.DownloadURL.LastIndexOf('/') + 1);
+
+            <dt class="col-sm-2">
+                Download
+            </dt>
+            <dd class="col-sm-10">
+                <a href="/UploadedFiles/@fileName2" download>Download</a>
+            </dd>
+            
+        }
+
+        
+        
+    </dl>
+</div>
+<div>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+                    }
+    <a asp-action="Index">Back to List</a>
+</div>
